@@ -117,7 +117,7 @@
             ☰ Menú
           </button>
           <span id="banner-badge" class="text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-wider truncate max-w-[190px] sm:max-w-none">
-            NovaPlay Hub
+            NovaPlay
           </span>
         </div>
         <div class="text-xs font-medium opacity-65 hidden lg:block">
@@ -197,19 +197,17 @@
     let temaActual = 'negro';
 
     const LISTA_PROYECTOS = [
-      { id: 'among-us', title: 'Among Us', category: 'Arcade', iconUrl: 'https://images.seeklogo.com/logo-png/41/2/among-us-logo-png_seeklogo-410042.png', description: 'Descubre al impostor antes de que sea demasiado tarde.', url: './AmongUs/' },
-      { id: 'angry-birds', title: 'Angry Birds', category: 'Arcade', iconUrl: 'https://www.angrybirds.com/wp-content/uploads/2022/05/ABF_App_Logo-800x800.jpg', description: 'Lanza aves y destruye las estructuras enemigas.', url: './Angry%20Birds/' },
+      { id: 'among-us', title: 'Among Us', category: 'Arcade', iconUrl: 'https://images.seeklogo.com/logo-png/41/2/among-us-logo-png_seeklogo-410042.png', description: 'Descubre al impostor antes de que sea demasiado tarde.', url: './AmongUS/' },
+      { id: 'angry-birds', title: 'Angry Birds', category: 'Arcade', iconUrl: 'https://www.angrybirds.com/wp-content/uploads/2022/05/ABF_App_Logo-800x800.jpg', description: 'Lanza aves y destruye las estructuras enemigas.', url: './AngryBirds/' },
+      { id: 'dash-game', title: 'DashGame', category: 'Arcade', iconUrl: 'https://img.magnific.com/premium-vector/8bit-pixelated-style-star-icon-vector-illustration_1120563-33205.jpg?semt=ais_hybrid&w=740&q=80', description: 'Videojuego exclusivo de la plataforma.', url: './DashGame/' },
       { id: 'excel', title: 'Excel', category: 'Productividad', iconUrl: 'https://mailmeteor.com/logos/assets/PNG/Microsoft_Office_Excel_Logo_512px.png', description: 'Hoja de cálculo web interactiva para datos y tablas.', url: './Excel/' },
-      { id: 'futbol-2026-2d', title: 'Futbol 2026 2D', category: 'Deportes', iconUrl: 'https://assets.football-logos.cc/logos/tournaments/700x700/fifa-world-cup-2026.7042846f.png', description: 'Partido arcade de fútbol 2D en navegador.', url: './Futbol%202026%202D/' },
-      { id: 'geometry-dash', title: 'Geometry Dash', category: 'Arcade', iconUrl: 'https://iconlogovector.com/uploads/images/2024/11/lg-672f6390ae1ce-Geometry-Dash.webp', description: 'Salta y esquiva los obstáculos al ritmo.', url: './Geometry%20Dash/' },
+      { id: 'geometry-dash', title: 'Geometry Dash', category: 'Arcade', iconUrl: 'https://iconlogovector.com/uploads/images/2024/11/lg-672f6390ae1ce-Geometry-Dash.webp', description: 'Salta y esquiva los obstáculos al ritmo.', url: './GeometryDash/' },
       { id: 'marcador', title: 'Marcador', category: 'Herramientas', iconUrl: 'https://images.vexels.com/media/users/3/146858/isolated/preview/bc1e175617f4066c16d64f863e1c6ad4-icono-de-marcador-de-futbol.png', description: 'Tablero de puntuación y control de tiempo.', url: './Marcador/' },
       { id: 'minecraft', title: 'Minecraft', category: 'Arcade', iconUrl: 'https://cdn.freebiesupply.com/logos/large/2x/minecraft-1-logo-png-transparent.png', description: 'Aventura y construcción en mundo abierto.', url: './Minecraft/' },
-      { id: 'navegador-web', title: 'NavegadorWeb', category: 'Herramientas', iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_%282011%29.png', description: 'Navegador web integrado dentro del portal.', url: './NavegadorWeb/' },
-      { id: 'nova-game', title: 'NovaGame', category: 'Arcade', iconUrl: 'https://img.magnific.com/premium-vector/8bit-pixelated-style-star-icon-vector-illustration_1120563-33205.jpg?semt=ais_hybrid&w=740&q=80', description: 'Videojuego exclusivo de la plataforma.', url: './NovaGame/' },
-      { id: 'os', title: 'OS', category: 'Sistema', iconUrl: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Windows_logo_-_2021.svg/960px-Windows_logo_-_2021.svg.png', description: 'Simulador de entorno de sistema operativo web.', url: './OS/' },
-      { id: 'powerpoint', title: 'PowerPoint', category: 'Productividad', iconUrl: 'https://mailmeteor.com/logos/assets/PNG/Microsoft_Office_PowerPoint_Logo_512px.png', description: 'Creador y visor de presentaciones web.', url: './Powerpoint/' },
+      { id: 'powerpoint', title: 'PowerPoint', category: 'Productividad', iconUrl: 'https://mailmeteor.com/logos/assets/PNG/Microsoft_Office_PowerPoint_Logo_512px.png', description: 'Creador y visor de presentaciones web.', url: './PowerPoint/' },
       { id: 'rocket-league', title: 'Rocket League', category: 'Deportes', iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e0/Rocket_League_coverart.jpg', description: 'Fútbol arcade de alta velocidad con autos propulsados por cohetes.', url: './RocketLeague/' },
       { id: 'school-party-craft', title: 'School Party Craft', category: 'Arcade', iconUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQelfdd1I8LvAsu13pFoW0EE31PeXhFXMUw96drzz2IOw&s=10', description: 'Divertido juego de bloques con temática escolar.', url: './SchoolPartyCraft/' },
+      { id: 'sistema-operativos', title: 'SistemaOperativos', category: 'Sistema', iconUrl: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Windows_logo_-_2021.svg/960px-Windows_logo_-_2021.svg.png', description: 'Simulador de entorno de sistema operativo web.', url: './SistemaOperativos/' },
       { id: 'traductor', title: 'Traductor', category: 'Herramientas', iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Google_Translate_logo.svg/1280px-Google_Translate_logo.svg.png', description: 'Traductor de texto rápido y eficiente.', url: './Traductor/' },
       { id: 'volumen', title: 'Volumen', category: 'Cálculo', iconUrl: 'https://cdn-icons-png.flaticon.com/512/2902/2902663.png', description: 'Calculadora de volumen y capacidad geométrica.', url: './Volumen/' },
       { id: 'word', title: 'Word', category: 'Productividad', iconUrl: 'https://mailmeteor.com/logos/assets/PNG/Microsoft_Office_Word_Logo_512px.png', description: 'Procesador de textos web integrado.', url: './Word/' }
