@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Inicio | Portal Web</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,7 +50,7 @@
 <body id="cuerpo-principal" class="modo-pc-activo min-h-screen flex flex-col md:flex-row antialiased">
 
   <!-- FONDO OSCURO MÓVIL -->
-  <div id="mobile-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black z-40 hidden md:hidden"></div>
+  <div id="mobile-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/70 z-40 hidden md:hidden"></div>
 
   <!-- PANEL LATERAL -->
   <aside id="sidebar-panel" class="fixed inset-y-0 left-0 w-72 sm:w-80 transform -translate-x-full md:translate-x-0 md:sticky md:top-0 md:h-screen flex flex-col justify-between p-5 sm:p-6 border-r transition-transform duration-200 ease-out z-50 overflow-y-auto">
@@ -125,7 +125,7 @@
       <div class="space-y-2 pb-4 border-b border-current/15">
         <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Bienvenido</h2>
         <p class="text-xs sm:text-sm leading-relaxed opacity-75">
-          Bienvenido a la página principal del sitio. Este espacio reúne en un solo lugar los accesos más importantes para que navegues rápido y sin complicaciones desde cualquier dispositivo. Aquí puedes entrar directamente a NovaPlay para disfrutar un montón de juegos y herramientas web desde el navegador, conectarte a nuestro servidor de Minecraft, visitar las redes sociales para mantenerte al día con novedades y avisos, o unirte a nuestro servidor de ClassiCube para jugar y compartir en comunidad. Elige el tema en blanco o negro y ajusta el rendimiento según uses computadora o teléfono para tener la mejor experiencia posible.
+          Bienvenido a la página principal del sitio. Este espacio reúne en un solo lugar los accesos más importantes para que navegues rápido y sin complicaciones desde cualquier dispositivo. Aquí puedes entrar directamente a NovaPlay para disfrutar un montón de juegos y herramientas web desde el navegador, conectarte a nuestro servidor de Minecraft, visitar los perfiles para mantenerte al día con novedades y avisos, o unirte a nuestro servidor de ClassiCube para jugar y compartir en comunidad. Elige el tema en blanco o negro y ajusta el rendimiento según uses computadora o teléfono para tener la mejor experiencia posible.
         </p>
       </div>
 
@@ -143,7 +143,7 @@
                 NovaPlay
               </span>
               <span class="sub-portal block text-xs leading-snug mt-0.5">
-                Juega un monto de Juegos desde el Navegador
+                Juega un montón de juegos desde el navegador
               </span>
             </div>
           </div>
@@ -161,25 +161,25 @@
                 MineCraft Server
               </span>
               <span class="sub-portal block text-xs leading-snug mt-0.5">
-                Entra a nuestro Server de Minecraft
+                Entra a nuestro server de Minecraft
               </span>
             </div>
           </div>
           <span class="flecha-portal text-lg font-extrabold shrink-0">→</span>
         </a>
 
-        <!-- 3. REDES SOCIALES -->
+        <!-- 3. PERFILES -->
         <a href="./Perfiles/" class="btn-anim inicio-card boton-portal rounded-3xl p-5 sm:p-6 border flex items-center justify-between gap-4 transition">
           <div class="flex items-center gap-4 min-w-0">
             <div class="icon-box icono-portal w-14 h-14 rounded-2xl border flex items-center justify-center overflow-hidden p-1.5 shrink-0">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjVbpMLrxokI1h8S1JUfs3IRxk1nWJu_rhUzZLuF-oHQ&s=10.png" alt="Redes Sociales" class="w-full h-full object-cover rounded-xl" />
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjVbpMLrxokI1h8S1JUfs3IRxk1nWJu_rhUzZLuF-oHQ&s=10.png" alt="Perfiles" class="w-full h-full object-cover rounded-xl" />
             </div>
             <div class="min-w-0">
               <span class="titulo-portal block text-base sm:text-lg font-extrabold tracking-tight truncate">
-                Redes Sociales
+                Perfiles
               </span>
               <span class="sub-portal block text-xs leading-snug mt-0.5">
-                Sigueme en mi Redes Sociales
+                Sígueme en mis perfiles y comunidad
               </span>
             </div>
           </div>
@@ -197,7 +197,7 @@
                 ClassiCube Server
               </span>
               <span class="sub-portal block text-xs leading-snug mt-0.5">
-                Entra a Nuestro Server de ClassiCube
+                Entra a nuestro server de ClassiCube
               </span>
             </div>
           </div>
@@ -211,7 +211,7 @@
     <footer id="footer-principal" class="py-5 px-4 sm:px-8 text-xs border-t mt-auto">
       <div class="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left opacity-75">
         <p class="font-semibold">Portal Principal</p>
-        <p>NovaPlay • MineCraft • Redes • ClassiCube</p>
+        <p>NovaPlay • MineCraft • Perfiles • ClassiCube</p>
       </div>
     </footer>
   </div>
