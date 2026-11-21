@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>NexCraft | Minecraft Server</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .mc-fondo {
+      background: linear-gradient(180deg, #1b2822 0%, #24362d 56%, #141916 100%);
+    }
+
+    .tarjeta-mc {
+      background-color: #18181b;
+      box-shadow: 0 24px 50px -12px rgba(0, 0, 0, 0.78), 0 0 0 1px rgba(255, 255, 255, 0.12);
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .tarjeta-mc:hover {
+      transform: translateY(-3px);
+    }
+
+    .panel-lateral-mc {
+      background-color: rgba(20, 22, 21, 0.9);
+      box-shadow: 0 18px 36px -12px rgba(0, 0, 0, 0.68), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .panel-lateral-mc:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-mc {
+      transition: transform 0.16s ease, background-color 0.18s ease, filter 0.18s ease;
+    }
+
+    .btn-mc:hover {
+      filter: brightness(1.08);
+      transform: translateY(-2px);
+    }
+
+    .btn-mc:active {
+      transform: scale(0.97);
+    }
+
+    @keyframes flotarSuave {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .icono-flotante {
+      animation: flotarSuave 3.2s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-[#121312] text-white antialiased">
+
+  <!-- BARRA SUPERIOR ESTILO MINECRAFT -->
+  <header class="w-full bg-[#18181b] text-white border-b-2 border-[#2d6a3e] px-4 sm:px-8 h-12 flex items-center justify-between sticky top-0 z-30 shadow-md">
+    <a href="./" class="flex items-center gap-2.5 font-extrabold text-base sm:text-lg tracking-tight hover:opacity-95 transition">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRIZ--gcmxq1Kecc1e-p5A5WcWAn3j0uOSzZX38gzMlw&s=10.png" alt="NexCraft Icono" class="w-7 h-7 rounded object-cover border border-[#3c8527] shrink-0 shadow-sm" />
+      <span class="tracking-wide">NEXCRAFT</span>
+    </a>
+
+    <a href="../" class="text-xs font-bold bg-[#3c8527] hover:bg-[#327020] text-white px-3 py-1 rounded border border-[#52a538] transition">
+      ← Inicio
+    </a>
+  </header>
+
+  <!-- FONDO DE BLOQUES CON REGLAS, TARJETA CENTRAL Y NOTICIAS -->
+  <main class="relative flex-1 w-full mc-fondo overflow-hidden flex items-center justify-center p-4 sm:p-8">
+    <canvas id="canvas-mc" class="absolute inset-0 w-full h-full object-cover pointer-events-none"></canvas>
+
+    <div class="relative z-10 w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+
+      <!-- LADO IZQUIERDO: REGLAS DEL SERVER -->
+      <aside class="lg:col-span-3 panel-lateral-mc rounded-2xl overflow-hidden order-2 lg:order-1">
+        <div class="grid grid-cols-4 h-1.5 w-full">
+          <div class="bg-[#3c8527]"></div>
+          <div class="bg-[#5b3c24]"></div>
+          <div class="bg-[#52a538]"></div>
+          <div class="bg-[#3d2818]"></div>
+        </div>
+        <div class="p-4 sm:p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-400">
+              📜 Reglas del Server
+            </span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+              10 Reglas
+            </span>
+          </div>
+
+          <h2 class="text-sm font-extrabold tracking-tight">Normas de NexCraft</h2>
+          <ol class="space-y-1.5 text-xs text-zinc-200 leading-snug list-decimal list-inside">
+            <li>Respeta a todos los jugadores.</li>
+            <li>No insultes ni provoques peleas.</li>
+            <li>No hagas spam en el chat.</li>
+            <li>No uses hacks, x-ray ni trampas.</li>
+            <li>No hagas griefing ni robes cofres.</li>
+            <li>No hagas publicidad sin permiso.</li>
+            <li>No suplantes a otros jugadores.</li>
+            <li>Obedece a los administradores.</li>
+            <li>No construyas cosas ofensivas.</li>
+            <li>¡Diviértete y juega limpio!</li>
+          </ol>
+        </div>
+      </aside>
+
+      <!-- CENTRO: TARJETA PRINCIPAL DE NEXCRAFT -->
+      <section class="lg:col-span-6 tarjeta-mc rounded-2xl overflow-hidden order-1 lg:order-2 max-w-md w-full mx-auto">
+
+        <!-- FRANJA SUPERIOR DECORATIVA ESTILO BLOQUE DE TIERRA Y PASTO -->
+        <div class="grid grid-cols-8 h-2 w-full">
+          <div class="bg-[#3c8527]"></div>
+          <div class="bg-[#52a538]"></div>
+          <div class="bg-[#3c8527]"></div>
+          <div class="bg-[#5b3c24]"></div>
+          <div class="bg-[#3c8527]"></div>
+          <div class="bg-[#52a538]"></div>
+          <div class="bg-[#3c8527]"></div>
+          <div class="bg-[#5b3c24]"></div>
+        </div>
+
+        <div class="p-6 sm:p-7 space-y-5">
+          <!-- CABECERA DE TARJETA -->
+          <div class="flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3.5">
+              <div class="icono-flotante w-14 h-14 rounded-2xl bg-[#222523] border border-white/15 p-1.5 flex items-center justify-center shrink-0 shadow-inner">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRIZ--gcmxq1Kecc1e-p5A5WcWAn3j0uOSzZX38gzMlw&s=10.png" alt="NexCraft" class="w-full h-full rounded-xl object-cover" />
+              </div>
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded bg-[#3c8527] text-white">
+                    <span class="w-1.5 h-1.5 rounded-full bg-lime-300"></span>
+                    Servidor NexCraft
+                  </span>
+                </div>
+                <h1 class="text-2xl font-extrabold tracking-tight leading-none">NexCraft</h1>
+              </div>
+            </div>
+          </div>
+
+          <!-- ETIQUETAS DECORATIVAS -->
+          <div class="flex flex-wrap gap-2">
+            <span class="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-[#222523] border border-white/10 text-zinc-200">
+              📱 Bedrock Edition
+            </span>
+            <span class="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-[#222523] border border-white/10 text-zinc-200">
+              💻 Java Edition
+            </span>
+            <span class="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-[#222523] border border-white/10 text-zinc-200">
+              🧱 Aternos
+            </span>
+          </div>
+
+          <!-- DESCRIPCIÓN -->
+          <p class="text-xs sm:text-sm text-zinc-200 leading-relaxed">
+            Bienvenido a <strong>NexCraft</strong>, nuestro servidor de Minecraft en Aternos. Elige tu edición —<strong>Bedrock</strong> o <strong>Java</strong>—, copia la dirección correspondiente y entra a construir, explorar y jugar en comunidad.
+          </p>
+
+          <!-- DIRECCIONES DE CONEXIÓN -->
+          <div class="space-y-2 text-xs">
+            <div class="p-3 rounded-xl bg-[#222523] border border-white/10 flex items-center justify-between gap-2">
+              <span class="text-zinc-400 font-semibold shrink-0">Bedrock:</span>
+              <span class="font-bold text-emerald-300 truncate">NexCraftBedrock.aternos.me</span>
+            </div>
+            <div class="p-3 rounded-xl bg-[#222523] border border-white/10 flex items-center justify-between gap-2">
+              <span class="text-zinc-400 font-semibold shrink-0">Java:</span>
+              <span class="font-bold text-lime-300 truncate">NexCraftJava.aternos.me</span>
+            </div>
+          </div>
+
+          <!-- SOLO LOS DOS BOTONES DE COPIAR URL / LINK DEL SERVER -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+            <button
+              id="btn-copiar-bedrock"
+              onclick="copiarBedrock()"
+              class="btn-mc w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#3c8527] hover:bg-[#327020] text-white font-bold text-xs sm:text-sm shadow-lg border border-[#58b43c]/40"
+            >
+              <span>🔗 Copiar Link Bedrock</span>
+            </button>
+
+            <button
+              id="btn-copiar-java"
+              onclick="copiarJava()"
+              class="btn-mc w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-[#222523] hover:bg-[#2b2f2c] text-zinc-100 font-bold text-xs sm:text-sm border border-white/15"
+            >
+              <span>🔗 Copiar Link Java</span>
+            </button>
+          </div>
+
+          <!-- PIE DE TARJETA -->
+          <div class="pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-zinc-400">
+            <span>Host: Aternos</span>
+            <span>Bedrock & Java</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- LADO DERECHO: NOTICIAS -->
+      <aside class="lg:col-span-3 panel-lateral-mc rounded-2xl overflow-hidden order-3">
+        <div class="grid grid-cols-4 h-1.5 w-full">
+          <div class="bg-[#5b3c24]"></div>
+          <div class="bg-[#3c8527]"></div>
+          <div class="bg-[#3d2818]"></div>
+          <div class="bg-[#52a538]"></div>
+        </div>
+        <div class="p-4 sm:p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-400">
+              📰 Noticias
+            </span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+              NexCraft
+            </span>
+          </div>
+
+          <h2 class="text-sm font-extrabold tracking-tight leading-snug">
+            ¡SERVIDORES NEXCRAFT LISTOS!
+          </h2>
+
+          <p class="text-xs font-semibold text-emerald-200 leading-snug">
+            ¡Elige tu versión y entra a jugar!
+          </p>
+
+          <ul class="space-y-1.5 text-xs text-zinc-200 leading-snug">
+            <li>• Bedrock: NexCraftBedrock.aternos.me</li>
+            <li>• Java: NexCraftJava.aternos.me</li>
+            <li>• Zonas libres para construir y explorar.</li>
+            <li>• ¡Invita a tus amigos a jugar!</li>
+          </ul>
+
+          <p class="text-xs font-bold text-white pt-1">
+            ¡Nos vemos dentro de NexCraft!
+          </p>
+
+          <div class="pt-1">
+            <button
+              onclick="copiarBedrock()"
+              class="btn-mc w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-[#3c8527] hover:bg-[#327020] text-white text-xs font-bold border border-[#58b43c]/40"
+            >
+              <span>Copiar Link Bedrock</span>
+              <span>🔗</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <script>
+    const URL_BEDROCK = 'NexCraftBedrock.aternos.me';
+    const URL_JAVA = 'NexCraftJava.aternos.me';
+
+    function copiarBedrock() {
+      const btn = document.getElementById('btn-copiar-bedrock');
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(URL_BEDROCK).catch(() => {});
+      }
+      btn.innerHTML = '<span>✅ ¡Link Bedrock copiado!</span>';
+      setTimeout(() => {
+        btn.innerHTML = '<span>🔗 Copiar Link Bedrock</span>';
+      }, 2200);
+    }
+
+    function copiarJava() {
+      const btn = document.getElementById('btn-copiar-java');
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(URL_JAVA).catch(() => {});
+      }
+      btn.innerHTML = '<span>✅ ¡Link Java copiado!</span>';
+      setTimeout(() => {
+        btn.innerHTML = '<span>🔗 Copiar Link Java</span>';
+      }, 2200);
+    }
+
+    (function animarPaisajeBloquesMc() {
+      const canvas = document.getElementById('canvas-mc');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const W = 1280;
+      const H = 680;
+      canvas.width = W;
+      canvas.height = H;
+
+      const nubes = [
+        { x: 90, y: 70, w: 120, h: 24, speed: 0.2 },
+        { x: 430, y: 115, w: 150, h: 26, speed: 0.14 },
+        { x: 820, y: 65, w: 115, h: 22, speed: 0.23 },
+        { x: 1090, y: 125, w: 105, h: 22, speed: 0.17 }
+      ];
+
+      const columnas = [];
+      for (let x = 0; x < W; x += 36) {
+        const alturaBloques = 3 + ((x * 7 + 5) % 6);
+        columnas.push({ x, alturaBloques });
+      }
+
+      function dibujar() {
+        ctx.clearRect(0, 0, W, H);
+
+        ctx.fillStyle = 'rgba(254, 240, 138, 0.22)';
+        ctx.fillRect(W - 170, 56, 56, 56);
+
+        nubes.forEach(n => {
+          n.x += n.speed;
+          if (n.x > W + 40) n.x = -n.w - 40;
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.13)';
+          ctx.fillRect(n.x, n.y, n.w, n.h);
+          ctx.fillRect(n.x + 18, n.y - 10, n.w - 36, 10);
+        });
+
+        const tamBloque = 28;
+        const baseY = H - tamBloque;
+
+        columnas.forEach(col => {
+          for (let i = 0; i < col.alturaBloques; i++) {
+            const by = baseY - i * tamBloque;
+            if (i === col.alturaBloques - 1) {
+              ctx.fillStyle = '#5b3c24';
+              ctx.fillRect(col.x, by, tamBloque, tamBloque);
+              ctx.fillStyle = '#3c8527';
+              ctx.fillRect(col.x, by, tamBloque, 9);
+            } else {
+              ctx.fillStyle = i < 2 ? '#4a301c' : '#3a3d40';
+              ctx.fillRect(col.x, by, tamBloque, tamBloque);
+            }
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.25)';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(col.x + 0.5, by + 0.5, tamBloque - 1, tamBloque - 1);
+          }
+        });
+
+        requestAnimationFrame(dibujar);
+      }
+
+      dibujar();
+    })();
+  </script>
+</body>
+</html>
