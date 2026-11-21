@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Redes | N3xx-us</title>
+  <title>Perfiles | N3xx-us</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,8 +47,8 @@
   <!-- BARRA SUPERIOR -->
   <header class="w-full bg-black border-b border-zinc-800 px-4 sm:px-8 h-12 flex items-center justify-between sticky top-0 z-30">
     <a href="./" class="flex items-center gap-2.5 font-extrabold text-base sm:text-lg tracking-tight hover:opacity-90 transition">
-      <span class="w-6 h-6 rounded bg-white text-zinc-950 flex items-center justify-center text-xs font-black">🌐</span>
-      <span>Redes • N3xx-us</span>
+      <span class="w-6 h-6 rounded bg-white text-zinc-950 flex items-center justify-center text-xs font-black">👤</span>
+      <span>Perfiles • N3xx-us</span>
     </a>
 
     <a href="../" class="px-3 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-xs font-bold border border-zinc-700 transition">
@@ -57,21 +57,21 @@
   </header>
 
   <!-- CONTENIDO PRINCIPAL -->
-  <main class="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col justify-center space-y-8">
+  <main class="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col justify-center space-y-8">
 
     <!-- ENCABEZADO -->
     <div class="text-center space-y-2 max-w-xl mx-auto">
       <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded bg-white text-zinc-950">
         Canales y Comunidad
       </span>
-      <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Redes de N3xx-us</h1>
+      <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Perfiles de N3xx-us</h1>
       <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-        Sigue los videos, únete al servidor de Discord y no te pierdas los directos. Elige una plataforma o copia el enlace directo.
+        Sigue los videos, únete al servidor de Discord, mira los directos y visita los perfiles de Bloxd.io, Chess.com y Scratch.
       </p>
     </div>
 
-    <!-- TARJETAS DE REDES -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+    <!-- TARJETAS DE PERFILES -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
 
       <!-- YOUTUBE -->
       <article class="tarjeta-red rounded-2xl p-5 flex flex-col justify-between gap-5">
@@ -195,6 +195,132 @@
             class="btn-accion w-full py-2 px-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 font-semibold text-xs border border-zinc-800"
           >
             📋 Copiar canal
+          </button>
+        </div>
+      </article>
+
+      <!-- BLOXD.IO -->
+      <article class="tarjeta-red rounded-2xl p-5 flex flex-col justify-between gap-5">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReHwvx9Yk32KokO_IYD6pUr54VbKR9dEPngw3fBg7cbA&s=10.png"
+              alt="Bloxd.io N3xxs-US"
+              class="w-12 h-12 rounded-xl object-cover border border-white/15 shrink-0"
+            />
+            <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-400/25">
+              Bloxd.io
+            </span>
+          </div>
+
+          <div>
+            <h2 class="text-lg font-extrabold tracking-tight">N3xxs-US</h2>
+            <p class="text-xs text-zinc-400 mt-1 leading-relaxed">
+              Perfil oficial de jugador en Bloxd.io para revisar estadísticas y partidas.
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <a
+            href="https://bloxd.io/player/1784627/N3xxs-US"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-accion w-full py-2.5 px-3.5 rounded-xl bg-white text-zinc-950 font-bold text-xs flex items-center justify-center gap-1.5"
+          >
+            <span>Ver en Bloxd.io</span>
+            <span>↗</span>
+          </a>
+          <button
+            id="btn-copy-bx"
+            onclick="copiarLink('https://bloxd.io/player/1784627/N3xxs-US', 'btn-copy-bx')"
+            class="btn-accion w-full py-2 px-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 font-semibold text-xs border border-zinc-800"
+          >
+            📋 Copiar perfil
+          </button>
+        </div>
+      </article>
+
+      <!-- CHESS.COM -->
+      <article class="tarjeta-red rounded-2xl p-5 flex flex-col justify-between gap-5">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa1HGD8VXctQ2oV47vj27LVuG2D2O2ckQMkcerglQSAQ&s=10.png"
+              alt="Chess.com n3xx_us"
+              class="w-12 h-12 rounded-xl object-cover border border-white/15 shrink-0"
+            />
+            <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-400/25">
+              Chess.com
+            </span>
+          </div>
+
+          <div>
+            <h2 class="text-lg font-extrabold tracking-tight">n3xx_us</h2>
+            <p class="text-xs text-zinc-400 mt-1 leading-relaxed">
+              Perfil de ajedrez en Chess.com para jugar partidas y revisar el historial.
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <a
+            href="https://www.chess.com/member/n3xx_us"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-accion w-full py-2.5 px-3.5 rounded-xl bg-white text-zinc-950 font-bold text-xs flex items-center justify-center gap-1.5"
+          >
+            <span>Ver en Chess.com</span>
+            <span>↗</span>
+          </a>
+          <button
+            id="btn-copy-ch"
+            onclick="copiarLink('https://www.chess.com/member/n3xx_us', 'btn-copy-ch')"
+            class="btn-accion w-full py-2 px-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 font-semibold text-xs border border-zinc-800"
+          >
+            📋 Copiar perfil
+          </button>
+        </div>
+      </article>
+
+      <!-- SCRATCH -->
+      <article class="tarjeta-red rounded-2xl p-5 flex flex-col justify-between gap-5">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvtzpPSqh5D_gIwvnq-op8RjvrnAAx95s9-l8JaL-RgjVjlH8tJReUmNzR&s=10.png"
+              alt="Scratch N3xx_Us_Oficial"
+              class="w-12 h-12 rounded-xl object-cover border border-white/15 shrink-0"
+            />
+            <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-400/25">
+              Scratch
+            </span>
+          </div>
+
+          <div>
+            <h2 class="text-lg font-extrabold tracking-tight">N3xx_Us_Oficial</h2>
+            <p class="text-xs text-zinc-400 mt-1 leading-relaxed">
+              Perfil oficial en Scratch con proyectos interactivos, animaciones y experimentos.
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <a
+            href="https://scratch.mit.edu/users/N3xx_Us_Oficial"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-accion w-full py-2.5 px-3.5 rounded-xl bg-white text-zinc-950 font-bold text-xs flex items-center justify-center gap-1.5"
+          >
+            <span>Ver en Scratch</span>
+            <span>↗</span>
+          </a>
+          <button
+            id="btn-copy-sc"
+            onclick="copiarLink('https://scratch.mit.edu/users/N3xx_Us_Oficial', 'btn-copy-sc')"
+            class="btn-accion w-full py-2 px-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 font-semibold text-xs border border-zinc-800"
+          >
+            📋 Copiar perfil
           </button>
         </div>
       </article>
