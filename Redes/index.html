@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Redes | N3xx-us</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #09090b;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .tarjeta-red {
+      background-color: #121215;
+      box-shadow: 0 18px 36px -14px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.09);
+      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .tarjeta-red:hover {
+      transform: translateY(-3px);
+      background-color: #17171b;
+    }
+
+    .btn-accion {
+      transition: transform 0.14s ease, filter 0.16s ease, background-color 0.16s ease;
+    }
+
+    .btn-accion:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    .btn-accion:active {
+      transform: scale(0.98);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+  <!-- BARRA SUPERIOR -->
+  <header class="w-full bg-black border-b border-zinc-800 px-4 sm:px-8 h-12 flex items-center justify-between sticky top-0 z-30">
+    <a href="./" class="flex items-center gap-2.5 font-extrabold text-base sm:text-lg tracking-tight hover:opacity-90 transition">
+      <span class="w-6 h-6 rounded bg-white text-zinc-950 flex items-center justify-center text-xs font-black">🌐</span>
+      <span>Redes • N3xx-us</span>
+    </a>
+
+    <a href="../" class="px-3 py-1 rounded bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-xs font-bold border border-zinc-700 transition">
+      ← Inicio
+    </a>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col justify-center space-y-8">
+
+    <!-- ENCABEZADO -->
+    <div class="text-center space-y-2 max-w-xl mx-auto">
+      <span class="inline-block text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded bg-white text-zinc-950">
+        Canales y Comunidad
+      </span>
+      <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Redes de N3xx-us</h1>
+      <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+        Sigue los videos, únete al servidor de Discord y no te pierdas los directos. Elige una plataforma o copia el enlace directo.
+      </p>
+    </div>
+
+    <!-- TARJETAS DE REDES -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+
+      <!-- YOUTUBE -->
+      <article class="tarjeta-red rounded-2xl p-5 flex flex-col justify-between gap-5">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROhtNZt_jSMz1HD-AJGLfgGUpNWqWNi8FBkfRb6Vpc3Q&s=10.png"
+              alt="YouTube N3xx-us"
+              class="w-12 h-12 rounded-xl object-cover border border-white/15 shrink-0"
+            />
+            <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-red-500/15 text-red-300 border border-red-400/25">
+              YouTube
+            </span>
+          </div>
+
+          <div>
+            <h2 class="text-lg font-extrabold tracking-tight">@N3xx-us</h2>
+            <p class="text-xs text-zinc-400 mt-1 leading-relaxed">
+              Videos, gameplays, clips y contenido del canal oficial.
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <a
+            href="https://www.youtube.com/@N3xx-us"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-accion w-full py-2.5 px-3.5 rounded-xl bg-white text-zinc-950 font-bold text-xs flex items-center justify-center gap-1.5"
+          >
+            <span>Abrir YouTube</span>
+            <span>↗</span>
+          </a>
+          <button
+            id="btn-copy-yt"
+            onclick="copiarLink('https://www.youtube.com/@N3xx-us', 'btn-copy-yt')"
+            class="btn-accion w-full py-2 px-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 font-semibold text-xs border border-zinc-800"
+          >
+            📋 Copiar enlace
+          </button>
+        </div>
+      </article>
+
+      <!-- DISCORD -->
+      <article class="tarjeta-red rounded-2xl p-5 flex flex-col justify-between gap-5">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5ygBSShwpN_CFMYLRvIh-OzKP5VkIs854LszXC0ItsQ&s=10.png"
+              alt="Discord N3xx-us"
+              class="w-12 h-12 rounded-xl object-cover border border-white/15 shrink-0"
+            />
+            <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-300 border border-indigo-400/25">
+              Discord
+            </span>
+          </div>
+
+          <div>
+            <h2 class="text-lg font-extrabold tracking-tight">Comunidad Discord</h2>
+            <p class="text-xs text-zinc-400 mt-1 leading-relaxed">
+              Charla con la comunidad, avisos de partidas y novedades de los servidores.
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <a
+            href="https://discord.gg/VDQm3DJGQB"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-accion w-full py-2.5 px-3.5 rounded-xl bg-white text-zinc-950 font-bold text-xs flex items-center justify-center gap-1.5"
+          >
+            <span>Unirse a Discord</span>
+            <span>↗</span>
+          </a>
+          <button
+            id="btn-copy-dc"
+            onclick="copiarLink('https://discord.gg/VDQm3DJGQB', 'btn-copy-dc')"
+            class="btn-accion w-full py-2 px-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 font-semibold text-xs border border-zinc-800"
+          >
+            📋 Copiar invitación
+          </button>
+        </div>
+      </article>
+
+      <!-- TWITCH -->
+      <article class="tarjeta-red rounded-2xl p-5 flex flex-col justify-between gap-5">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyGjEw-3ZuJzS7y_8U4TVDrtJFB48yLFAA0nS1IGW-VQ&s=10.png"
+              alt="Twitch n3xx_us"
+              class="w-12 h-12 rounded-xl object-cover border border-white/15 shrink-0"
+            />
+            <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-purple-500/15 text-purple-300 border border-purple-400/25">
+              Twitch
+            </span>
+          </div>
+
+          <div>
+            <h2 class="text-lg font-extrabold tracking-tight">n3xx_us</h2>
+            <p class="text-xs text-zinc-400 mt-1 leading-relaxed">
+              Directos en vivo, partidas con seguidores y sesiones especiales.
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <a
+            href="https://www.twitch.tv/n3xx_us"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-accion w-full py-2.5 px-3.5 rounded-xl bg-white text-zinc-950 font-bold text-xs flex items-center justify-center gap-1.5"
+          >
+            <span>Ver en Twitch</span>
+            <span>↗</span>
+          </a>
+          <button
+            id="btn-copy-tw"
+            onclick="copiarLink('https://www.twitch.tv/n3xx_us', 'btn-copy-tw')"
+            class="btn-accion w-full py-2 px-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 font-semibold text-xs border border-zinc-800"
+          >
+            📋 Copiar canal
+          </button>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- WIDGET DE DISCORD ABAJO -->
+    <section class="tarjeta-red rounded-2xl p-5 sm:p-6 max-w-md w-full mx-auto space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="text-[10px] font-extrabold uppercase tracking-wider text-indigo-300 block">
+            💬 Widget en Vivo
+          </span>
+          <h2 class="text-base sm:text-lg font-extrabold tracking-tight">Servidor de Discord</h2>
+        </div>
+        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-300 border border-indigo-400/25">
+          En línea
+        </span>
+      </div>
+
+      <div class="w-full rounded-xl overflow-hidden border border-white/10 bg-[#0d0e11] flex justify-center">
+        <iframe
+          src="https://discord.com/widget?id=1572756862607036538&theme=dark"
+          width="350"
+          height="500"
+          allowtransparency="true"
+          frameborder="0"
+          sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+          class="w-full max-w-[350px] h-[500px] block"
+          title="Widget de Discord"
+        ></iframe>
+      </div>
+    </section>
+
+    <!-- ENLACE DE REGRESO -->
+    <div class="text-center pt-1">
+      <a href="../" class="text-xs text-zinc-400 hover:text-white underline transition">
+        ← Volver al inicio principal
+      </a>
+    </div>
+
+  </main>
+
+  <script>
+    function copiarLink(url, btnId) {
+      const btn = document.getElementById(btnId);
+      if (!btn) return;
+      const textoOriginal = btn.innerHTML;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).catch(() => {});
+      }
+      btn.innerHTML = '<span>✅ ¡Copiado!</span>';
+      setTimeout(() => {
+        btn.innerHTML = textoOriginal;
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
