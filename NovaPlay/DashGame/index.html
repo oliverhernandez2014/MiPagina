@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>NovaGame - Platformer Retro</title>
     <style>
         * {
@@ -11,6 +11,8 @@
             padding: 0;
             font-family: 'Courier New', Courier, monospace;
             user-select: none;
+            -webkit-user-select: none;
+            touch-action: none;
         }
 
         body, html {
@@ -22,70 +24,79 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            padding: 10px;
         }
 
         #game-container {
             position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 800 / 450;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 4px solid #38bdf8;
             border-radius: 4px;
+            overflow: hidden;
         }
 
         canvas {
+            width: 100%;
+            height: 100%;
             background: linear-gradient(to bottom, #1e1b4b, #311042);
             display: block;
         }
 
-        /* Interfaz de usuario por encima del Canvas */
         .hud {
             position: absolute;
-            top: 15px;
-            left: 15px;
+            top: 10px;
+            left: 14px;
+            right: 14px;
+            display: flex;
+            justify-content: space-between;
             color: #fff;
-            font-size: 18px;
+            font-size: clamp(14px, 2.5vw, 18px);
             font-weight: bold;
             text-shadow: 2px 2px 0px #000;
             pointer-events: none;
+            z-index: 2;
         }
 
         .game-over-screen {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.85);
-            display: flex;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.88);
+            display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             color: white;
-            display: none;
             text-align: center;
+            padding: 16px;
+            z-index: 5;
         }
 
         .game-over-screen h1 {
-            font-size: 42px;
+            font-size: clamp(26px, 6vw, 42px);
             color: #ef4444;
             margin-bottom: 10px;
             text-shadow: 3px 3px 0px #000;
         }
 
         .game-over-screen p {
-            font-size: 18px;
-            margin-bottom: 20px;
+            font-size: clamp(14px, 3vw, 18px);
+            margin-bottom: 18px;
         }
 
         .btn-restart {
-            padding: 12px 24px;
+            padding: 12px 22px;
             background: #38bdf8;
             border: none;
             color: #0f172a;
-            font-size: 16px;
+            font-size: clamp(14px, 2.8vw, 16px);
             font-weight: bold;
             cursor: pointer;
             border-radius: 4px;
             box-shadow: 0 4px 0 #0284c7;
+            touch-action: manipulation;
         }
 
         .btn-restart:active {
@@ -93,19 +104,81 @@
             box-shadow: none;
         }
 
+        /* Controles táctiles para celular/tablet */
+        .touch-controls {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 14px;
+            gap: 12px;
+        }
+
+        .dpad {
+            display: flex;
+            gap: 12px;
+        }
+
+        .touch-btn {
+            background: rgba(56, 189, 248, 0.18);
+            border: 2px solid #38bdf8;
+            color: #fff;
+            font-size: 22px;
+            font-weight: bold;
+            border-radius: 10px;
+            width: 68px;
+            height: 62px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .touch-btn.jump-btn {
+            width: 110px;
+            font-size: 16px;
+            background: rgba(74, 222, 128, 0.2);
+            border-color: #4ade80;
+        }
+
+        .touch-btn:active,
+        .touch-btn.active {
+            background: rgba(56, 189, 248, 0.55);
+            transform: scale(0.96);
+        }
+
+        .touch-btn.jump-btn:active,
+        .touch-btn.jump-btn.active {
+            background: rgba(74, 222, 128, 0.55);
+        }
+
         .controls-hint {
-            margin-top: 15px;
+            margin-top: 12px;
             color: #94a3b8;
-            font-size: 14px;
+            font-size: 13px;
             text-align: center;
+        }
+
+        /* Mostrar controles táctiles en pantallas pequeñas o dispositivos táctiles */
+        @media (pointer: coarse), (max-width: 768px) {
+            .touch-controls {
+                display: flex;
+            }
+            .controls-hint {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
 
     <div id="game-container">
-        <div class="hud">SCORE: <span id="score-val">0</span></div>
-        
+        <div class="hud">
+            <span>SCORE: <span id="score-val">0</span></span>
+            <span>BEST: <span id="best-val">0</span></span>
+        </div>
+
         <div class="game-over-screen" id="gameOverScreen">
             <h1>¡TE CAÍSTE!</h1>
             <p>Puntuación final: <span id="final-score">0</span></p>
@@ -115,22 +188,32 @@
         <canvas id="gameCanvas" width="800" height="450"></canvas>
     </div>
 
+    <div class="touch-controls" id="touchControls">
+        <div class="dpad">
+            <button type="button" class="touch-btn" id="btnLeft" aria-label="Izquierda">◀</button>
+            <button type="button" class="touch-btn" id="btnRight" aria-label="Derecha">▶</button>
+        </div>
+        <button type="button" class="touch-btn jump-btn" id="btnJump" aria-label="Saltar">SALTAR</button>
+    </div>
+
     <div class="controls-hint">
-        Controles: <b>Flechas Izquierda / Derecha</b> o <b>A / D</b> para moverte. <b>Espacio / Flecha Arriba</b> para saltar.
+        Controles PC: <b>Flechas / A, D</b> para moverte. <b>Espacio / W / Flecha Arriba</b> para saltar.
     </div>
 
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         const scoreVal = document.getElementById('score-val');
+        const bestVal = document.getElementById('best-val');
         const gameOverScreen = document.getElementById('gameOverScreen');
         const finalScore = document.getElementById('final-score');
 
-        // Configuración del estado del juego
         let gameActive = true;
         let score = 0;
+        let bestScore = Number(localStorage.getItem('novaGameBest')) || 0;
+        bestVal.textContent = bestScore;
+        let frameCount = 0;
 
-        // Propiedades del Jugador (Un cubo pixelado azul aqua)
         const player = {
             x: 100,
             y: 200,
@@ -145,42 +228,38 @@
             color: '#00f0ff'
         };
 
-        // Teclado
-        const keys = {
-            left: false,
-            right: false,
-            up: false
-        };
-
-        // Arreglos de objetos
+        const keys = { left: false, right: false, up: false };
         let platforms = [];
         let gems = [];
         let particles = [];
 
-        // Inicializar/Generar el mapa inicial
         function initMap() {
             platforms = [
                 { x: 50, y: 350, width: 150, height: 20, color: '#4ade80' },
                 { x: 260, y: 300, width: 120, height: 20, color: '#4ade80' },
                 { x: 450, y: 240, width: 100, height: 20, color: '#4ade80' },
                 { x: 620, y: 320, width: 130, height: 20, color: '#4ade80' },
-                { x: 350, y: 150, width: 110, height: 20, color: '#a855f7' } // Plataforma alta
+                { x: 350, y: 150, width: 110, height: 20, color: '#a855f7' }
             ];
 
             gems = [
-                { x: 310, y: 250, size: 8, collected: false, color: '#eab308' },
-                { x: 490, y: 190, size: 8, collected: false, color: '#eab308' },
-                { x: 400, y: 100, size: 8, collected: false, color: '#ec4899' } // Gema especial rosa
+                { x: 310, y: 250, baseY: 250, size: 8, collected: false, color: '#eab308' },
+                { x: 490, y: 190, baseY: 190, size: 8, collected: false, color: '#eab308' },
+                { x: 400, y: 100, baseY: 100, size: 8, collected: false, color: '#ec4899' }
             ];
-            
+
             particles = [];
         }
 
-        // --- SISTEMA DE ENTRADA (TECLADO) ---
+        // --- TECLADO (PC) ---
         window.addEventListener('keydown', (e) => {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
+                e.preventDefault();
+            }
             if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = true;
             if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = true;
             if (e.key === 'ArrowUp' || e.key === ' ' || e.key === 'w' || e.key === 'W') keys.up = true;
+            if (!gameActive && e.key === 'Enter') resetGame();
         });
 
         window.addEventListener('keyup', (e) => {
@@ -189,45 +268,75 @@
             if (e.key === 'ArrowUp' || e.key === ' ' || e.key === 'w' || e.key === 'W') keys.up = false;
         });
 
-        // Crear explosión de partículas pixeladas al agarrar gemas
+        // --- TÁCTIL (CELULAR / TABLET) ---
+        function bindTouchButton(btnId, keyName) {
+            const btn = document.getElementById(btnId);
+            if (!btn) return;
+
+            const press = (e) => {
+                e.preventDefault();
+                keys[keyName] = true;
+                btn.classList.add('active');
+            };
+
+            const release = (e) => {
+                e.preventDefault();
+                keys[keyName] = false;
+                btn.classList.remove('active');
+            };
+
+            btn.addEventListener('touchstart', press, { passive: false });
+            btn.addEventListener('touchend', release, { passive: false });
+            btn.addEventListener('touchcancel', release, { passive: false });
+            btn.addEventListener('mousedown', press);
+            btn.addEventListener('mouseup', release);
+            btn.addEventListener('mouseleave', release);
+        }
+
+        bindTouchButton('btnLeft', 'left');
+        bindTouchButton('btnRight', 'right');
+        bindTouchButton('btnJump', 'up');
+
         function createExplosion(x, y, color) {
             for (let i = 0; i < 12; i++) {
                 particles.push({
-                    x: x,
-                    y: y,
+                    x, y,
                     vx: (Math.random() - 0.5) * 6,
                     vy: (Math.random() - 0.5) * 6,
                     size: Math.random() * 4 + 2,
                     life: 30,
-                    color: color
+                    color
                 });
             }
         }
 
-        // --- LÓGICA DE ACTUALIZACIÓN ---
+        function updateScore(points) {
+            score += points;
+            scoreVal.textContent = score;
+            if (score > bestScore) {
+                bestScore = score;
+                bestVal.textContent = bestScore;
+                localStorage.setItem('novaGameBest', bestScore);
+            }
+        }
+
         function update() {
             if (!gameActive) return;
+            frameCount++;
 
-            // Movimiento horizontal
             if (keys.left) player.vx = -player.speed;
             else if (keys.right) player.vx = player.speed;
             else player.vx = 0;
 
-            // Aplicar gravedad
             player.vy += player.gravity;
-
-            // Guardar posición previa para colisiones perfectas
             let prevY = player.y;
 
-            // Mover ejes
             player.x += player.vx;
             player.y += player.vy;
 
-            // Límites de pantalla laterales
             if (player.x < 0) player.x = 0;
             if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
 
-            // Verificar si cae al vacío (Game Over)
             if (player.y > canvas.height) {
                 gameActive = false;
                 finalScore.textContent = score;
@@ -235,18 +344,14 @@
                 return;
             }
 
-            // --- FÍSICAS Y COLISIONES DE PLATAFORMAS ---
             player.isGrounded = false;
-            
             for (let plat of platforms) {
-                // Comprobar intersección de cajas (AABB)
                 if (player.x < plat.x + plat.width &&
                     player.x + player.width > plat.x &&
                     player.y < plat.y + plat.height &&
                     player.y + player.height > plat.y) {
-                    
-                    // Venía cayendo por encima de la plataforma
-                    if (prevY + player.height <= plat.y + 8) {
+
+                    if (prevY + player.height <= plat.y + 8 && player.vy >= 0) {
                         player.y = plat.y - player.height;
                         player.vy = 0;
                         player.isGrounded = true;
@@ -254,34 +359,30 @@
                 }
             }
 
-            // Salto
             if (keys.up && player.isGrounded) {
                 player.vy = -player.jumpForce;
                 player.isGrounded = false;
             }
 
-            // --- COLISIÓN CON GEMAS ---
             for (let gem of gems) {
-                if (!gem.collected &&
-                    player.x < gem.x + gem.size * 2 &&
-                    player.x + player.width > gem.x &&
-                    player.y < gem.y + gem.size * 2 &&
-                    player.y + player.height > gem.y) {
-                    
-                    gem.collected = true;
-                    let points = gem.color === '#ec4899' ? 25 : 10; // Gema rosa vale más
-                    score += points;
-                    scoreVal.textContent = score;
-                    createExplosion(gem.x + gem.size, gem.y + gem.size, gem.color);
+                if (!gem.collected) {
+                    gem.y = gem.baseY + Math.sin(frameCount * 0.08) * 4;
+                    if (player.x < gem.x + gem.size * 2 &&
+                        player.x + player.width > gem.x &&
+                        player.y < gem.y + gem.size * 2 &&
+                        player.y + player.height > gem.y) {
 
-                    // Si agarras todas las gemas, reaparecen de forma aleatoria para seguir jugando infinitamente
-                    if (gems.every(g => g.collected)) {
-                        respawnGems();
+                        gem.collected = true;
+                        updateScore(gem.color === '#ec4899' ? 25 : 10);
+                        createExplosion(gem.x + gem.size, gem.y + gem.size, gem.color);
+
+                        if (gems.every(g => g.collected)) {
+                            respawnGems();
+                        }
                     }
                 }
             }
 
-            // Actualizar partículas
             for (let i = particles.length - 1; i >= 0; i--) {
                 let p = particles[i];
                 p.x += p.vx;
@@ -291,25 +392,20 @@
             }
         }
 
-        // Generar gemas nuevas aleatorias cuando limpias el nivel
         function respawnGems() {
             for (let gem of gems) {
                 gem.collected = false;
-                // Asignar a una plataforma aleatoria
                 let randomPlat = platforms[Math.floor(Math.random() * platforms.length)];
                 gem.x = randomPlat.x + Math.random() * (randomPlat.width - 20);
-                gem.y = randomPlat.y - 30;
+                gem.baseY = randomPlat.y - 30;
+                gem.y = gem.baseY;
             }
-            score += 50; // Bonus por limpiar nivel
-            scoreVal.textContent = score;
+            updateScore(50);
         }
 
-        // --- RENDERIZADO (DIBUJO) ---
         function draw() {
-            // Limpiar pantalla con un tono oscuro
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Dibujar fondo de cuadrícula retro sutil
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
             ctx.lineWidth = 1;
             for (let i = 0; i < canvas.width; i += 32) {
@@ -319,17 +415,13 @@
                 ctx.beginPath(); ctx.moveTo(0, j); ctx.lineTo(canvas.width, j); ctx.stroke();
             }
 
-            // Dibujar plataformas
             for (let plat of platforms) {
                 ctx.fillStyle = plat.color;
                 ctx.fillRect(plat.x, plat.y, plat.width, plat.height);
-                
-                // Bordes pixelados superiores oscuros para estética
                 ctx.fillStyle = 'rgba(0,0,0,0.2)';
                 ctx.fillRect(plat.x, plat.y + plat.height - 5, plat.width, 5);
             }
 
-            // Dibujar gemas (estilo rombo retro)
             for (let gem of gems) {
                 if (!gem.collected) {
                     ctx.fillStyle = gem.color;
@@ -343,37 +435,32 @@
                 }
             }
 
-            // Dibujar Partículas
             for (let p of particles) {
                 ctx.fillStyle = p.color;
                 ctx.globalAlpha = p.life / 30;
                 ctx.fillRect(p.x, p.y, p.size, p.size);
             }
-            ctx.globalAlpha = 1.0; // Resetear alfa
+            ctx.globalAlpha = 1.0;
 
-            // Dibujar Jugador con un pequeño detalle de "ojos" pixelados según su dirección
             ctx.fillStyle = player.color;
             ctx.fillRect(player.x, player.y, player.width, player.height);
-            
-            // Ojos del cubo
+
             ctx.fillStyle = '#0f172a';
-            if (player.vx >= 0) { // Mirando a la derecha
+            if (player.vx >= 0) {
                 ctx.fillRect(player.x + 14, player.y + 6, 4, 4);
                 ctx.fillRect(player.x + 6, player.y + 6, 4, 4);
-            } else { // Mirando a la izquierda
+            } else {
                 ctx.fillRect(player.x + 4, player.y + 6, 4, 4);
                 ctx.fillRect(player.x + 12, player.y + 6, 4, 4);
             }
         }
 
-        // Bucle principal del juego
         function loop() {
             update();
             draw();
             requestAnimationFrame(loop);
         }
 
-        // Reiniciar el juego por completo
         function resetGame() {
             player.x = 100;
             player.y = 200;
@@ -386,7 +473,6 @@
             gameActive = true;
         }
 
-        // Arrancar juego por primera vez
         initMap();
         loop();
     </script>
