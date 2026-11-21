@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traductor Multidioma</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 560px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .selector-idiomas {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            background-color: #fff;
+            color: #333;
+            cursor: pointer;
+        }
+        select:focus {
+            outline: none;
+            border-color: #007BFF;
+        }
+        .btn-invertir {
+            background-color: #e9ecef;
+            color: #333;
+            border: none;
+            padding: 10px 14px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-weight: bold;
+        }
+        .btn-invertir:hover {
+            background-color: #dde2e6;
+        }
+        .barra-superior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .btn-secundario {
+            background-color: #e9ecef;
+            color: #333;
+            border: none;
+            padding: 6px 12px;
+            font-size: 13px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-secundario:hover {
+            background-color: #dde2e6;
+        }
+        textarea {
+            width: 100%;
+            height: 115px;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            resize: vertical;
+            font-size: 16px;
+            margin-bottom: 12px;
+            font-family: inherit;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #007BFF;
+        }
+        .btn-principal {
+            width: 100%;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: 600;
+        }
+        .btn-principal:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+        .btn-principal:disabled {
+            background-color: #7ab5f5;
+            cursor: not-allowed;
+        }
+        .resultado-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+        .resultado {
+            padding: 12px;
+            background-color: #e9ecef;
+            border-radius: 6px;
+            min-height: 65px;
+            border-left: 5px solid #007BFF;
+            font-size: 16px;
+            color: #333;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .error {
+            border-left-color: #dc3545;
+            color: #842029;
+            background-color: #f8d7da;
+        }
+        .pie-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Traductor Multidioma</h2>
+
+    <div class="selector-idiomas">
+        <div>
+            <label for="idiomaOrigen" class="sr-only" style="display:none;">Idioma de origen</label>
+            <select id="idiomaOrigen"></select>
+        </div>
+
+        <button type="button" class="btn-invertir" title="Invertir idiomas" onclick="invertirIdiomas()">⇄</button>
+
+        <div>
+            <label for="idiomaDestino" class="sr-only" style="display:none;">Idioma de destino</label>
+            <select id="idiomaDestino"></select>
+        </div>
+    </div>
+
+    <div class="barra-superior">
+        <strong id="etiquetaOrigen">Texto original:</strong>
+        <button type="button" class="btn-secundario" onclick="limpiarTexto()">Limpiar</button>
+    </div>
+
+    <textarea id="textoOrigen" placeholder="Escribe o pega el texto aquí..."></textarea>
+
+    <button id="btnTraducir" class="btn-principal" onclick="traducir()">Traducir</button>
+
+    <div class="pie-info">
+        <span id="contadorCaracteres">0 / 500 caracteres</span>
+        <span>Atajo: Ctrl + Enter (o Cmd + Enter)</span>
+    </div>
+
+    <div class="resultado-header">
+        <strong id="etiquetaDestino">Traducción:</strong>
+        <button type="button" id="btnCopiar" class="btn-secundario" onclick="copiarResultado()">Copiar</button>
+    </div>
+
+    <div id="textoDestino" class="resultado">La traducción aparecerá aquí...</div>
+</div>
+
+<script>
+    const IDIOMAS = [
+        { codigo: 'es', nombre: 'Español' },
+        { codigo: 'en', nombre: 'Inglés' },
+        { codigo: 'fr', nombre: 'Francés' },
+        { codigo: 'de', nombre: 'Alemán' },
+        { codigo: 'it', nombre: 'Italiano' },
+        { codigo: 'pt', nombre: 'Portugués' },
+        { codigo: 'ja', nombre: 'Japonés' },
+        { codigo: 'ko', nombre: 'Coreano' },
+        { codigo: 'zh', nombre: 'Chino' },
+        { codigo: 'ru', nombre: 'Ruso' },
+        { codigo: 'ar', nombre: 'Árabe' },
+        { codigo: 'nl', nombre: 'Neerlandés' },
+        { codigo: 'sv', nombre: 'Sueco' },
+        { codigo: 'pl', nombre: 'Polaco' },
+        { codigo: 'tr', nombre: 'Turco' },
+        { codigo: 'hi', nombre: 'Hindi' }
+    ];
+
+    const selectOrigen = document.getElementById('idiomaOrigen');
+    const selectDestino = document.getElementById('idiomaDestino');
+    const textareaOrigen = document.getElementById('textoOrigen');
+    const contenedorDestino = document.getElementById('textoDestino');
+    const btnTraducir = document.getElementById('btnTraducir');
+    const btnCopiar = document.getElementById('btnCopiar');
+    const contadorCaracteres = document.getElementById('contadorCaracteres');
+    const etiquetaOrigen = document.getElementById('etiquetaOrigen');
+    const etiquetaDestino = document.getElementById('etiquetaDestino');
+
+    function poblarSelectores() {
+        IDIOMAS.forEach(({ codigo, nombre }) => {
+            const opcionOrigen = new Option(nombre, codigo);
+            const opcionDestino = new Option(nombre, codigo);
+            selectOrigen.add(opcionOrigen);
+            selectDestino.add(opcionDestino);
+        });
+
+        // Valores iniciales por defecto
+        selectOrigen.value = 'en';
+        selectDestino.value = 'es';
+        actualizarEtiquetas();
+    }
+
+    function actualizarEtiquetas() {
+        const nombreOrigen = selectOrigen.options[selectOrigen.selectedIndex]?.text || 'Origen';
+        const nombreDestino = selectDestino.options[selectDestino.selectedIndex]?.text || 'Destino';
+        etiquetaOrigen.innerText = `Texto (${nombreOrigen}):`;
+        etiquetaDestino.innerText = `Traducción (${nombreDestino}):`;
+    }
+
+    function invertirIdiomas() {
+        const origenPrevio = selectOrigen.value;
+        const destinoPrevio = selectDestino.value;
+
+        selectOrigen.value = destinoPrevio;
+        selectDestino.value = origenPrevio;
+        actualizarEtiquetas();
+
+        const destinoActual = contenedorDestino.innerText;
+        const esEstadoInicial =
+            destinoActual === 'La traducción aparecerá aquí...' ||
+            destinoActual === 'Por favor, escribe algo primero.' ||
+            destinoActual === 'Traduciendo...';
+
+        if (!esEstadoInicial && !contenedorDestino.classList.contains('error')) {
+            textareaOrigen.value = destinoActual;
+            actualizarContador();
+            traducir();
+        }
+    }
+
+    function limpiarTexto() {
+        textareaOrigen.value = '';
+        actualizarContador();
+        contenedorDestino.classList.remove('error');
+        contenedorDestino.innerText = 'La traducción aparecerá aquí...';
+        textareaOrigen.focus();
+    }
+
+    function actualizarContador() {
+        const longitud = textareaOrigen.value.length;
+        contadorCaracteres.innerText = `${longitud} / 500 caracteres`;
+        contadorCaracteres.style.color = longitud > 500 ? '#dc3545' : '#6c757d';
+    }
+
+    async function copiarResultado() {
+        const texto = contenedorDestino.innerText;
+        const esEstadoInicial =
+            texto === 'La traducción aparecerá aquí...' ||
+            texto === 'Por favor, escribe algo primero.' ||
+            texto === 'Traduciendo...';
+
+        if (!texto || esEstadoInicial || contenedorDestino.classList.contains('error')) {
+            return;
+        }
+
+        try {
+            await navigator.clipboard.writeText(texto);
+            const textoOriginalBoton = btnCopiar.innerText;
+            btnCopiar.innerText = '¡Copiado!';
+            setTimeout(() => {
+                btnCopiar.innerText = textoOriginalBoton;
+            }, 1500);
+        } catch (err) {
+            console.error('No se pudo copiar:', err);
+        }
+    }
+
+    async function traducir() {
+        const texto = textareaOrigen.value.trim();
+        const origen = selectOrigen.value;
+        const destino = selectDestino.value;
+
+        contenedorDestino.classList.remove('error');
+
+        if (!texto) {
+            contenedorDestino.innerText = 'Por favor, escribe algo primero.';
+            return;
+        }
+
+        if (origen === destino) {
+            contenedorDestino.innerText = texto;
+            return;
+        }
+
+        if (texto.length > 500) {
+            contenedorDestino.classList.add('error');
+            contenedorDestino.innerText = 'El texto supera el límite de 500 caracteres para esta API gratuita.';
+            return;
+        }
+
+        btnTraducir.disabled = true;
+        contenedorDestino.innerText = 'Traduciendo...';
+
+        try {
+            const parIdiomas = `${origen}|${destino}`;
+            const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(texto)}&langpair=${encodeURIComponent(parIdiomas)}`;
+            const respuesta = await fetch(url);
+
+            if (!respuesta.ok) {
+                throw new Error(`HTTP ${respuesta.status}`);
+            }
+
+            const datos = await respuesta.json();
+            const traduccion = datos?.responseData?.translatedText;
+
+            if (traduccion) {
+                contenedorDestino.innerText = traduccion;
+            } else {
+                contenedorDestino.classList.add('error');
+                contenedorDestino.innerText = 'No se pudo obtener una traducción para esta combinación de idiomas.';
+            }
+        } catch (error) {
+            contenedorDestino.classList.add('error');
+            contenedorDestino.innerText = 'Error de conexión con el servidor de traducción.';
+            console.error(error);
+        } finally {
+            btnTraducir.disabled = false;
+        }
+    }
+
+    selectOrigen.addEventListener('change', actualizarEtiquetas);
+    selectDestino.addEventListener('change', actualizarEtiquetas);
+    textareaOrigen.addEventListener('input', actualizarContador);
+
+    textareaOrigen.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            e.preventDefault();
+            traducir();
+        }
+    });
+
+    poblarSelectores();
+    actualizarContador();
+</script>
+
+</body>
+</html>
